@@ -1,0 +1,10 @@
+
+npm 
+
+--------- NPX ---------
+order_1: npx sequelize-cli init
+order_2: npx sequelize-cli migration:generate --name user
+order_2: npx sequelize-cli migration:generate --name photo
+order_2: npx sequelize-cli migration:generate --name tag
+order_2: npx sequelize-cli migration:generate --name searchHistory
+order_3: npx sequelize-cli db:migrate
