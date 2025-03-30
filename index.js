@@ -8,7 +8,7 @@ app.use(express.json());
 const { sequelize } = require('./models/index.js');
 require('dotenv').config();
 
-const { createNewUser } = require('./controller/datacontroller.js');
+const { createNewUser } = require('./controller/dataController.js');
 const { searchImages } = require('./controller/serviceController.js');
 
 
@@ -27,11 +27,3 @@ sequelize.authenticate().then(() => {
 });
 
 module.exports = { app }
-
-/*
-const query = req.query;
-const queryVaIidation = validateSearchImagesQueryParam(query) ;
-if (queryVa1idation.length > 0) {
-    return res.status(400) .json({ error: queryVa1idation });
-}
-*/

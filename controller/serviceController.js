@@ -26,7 +26,7 @@ const searchImages = async (req, res) => {
         }
 
         const response = await axiosInstance.get(`/search/photos`, {
-            params: { query },
+            params: { query, client_id: accessKey },
         });
 
         const results = response.data;
