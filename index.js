@@ -8,13 +8,14 @@ app.use(express.json());
 const { sequelize } = require('./models/index.js');
 require('dotenv').config();
 
-const { createNewUser, savePhoto } = require('./controller/dataController.js');
+const { createNewUser, savePhoto, addPhotoTag } = require('./controller/dataController.js');
 const { searchImages } = require('./controller/serviceController.js');
 
 app.get('/api/photos/search', searchImages);
 
 app.post('/api/users',  createNewUser);
 app.post('/api/photos', savePhoto);
+app.post('/api/photos/:photoId/tags', addPhotoTag);
 
 app.get('/', (req, res) => {
     res.status(200).send('Bytr Picstoria - Unspalash: Excercise 2.4 MS1 Assignment (Working with Microservices)');
@@ -27,4 +28,4 @@ sequelize.authenticate().then(() => {
     console.error("Unable to connect to database", error);
 });
 
-module.exports = { app }
+module.exports = { app };
