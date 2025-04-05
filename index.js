@@ -8,12 +8,13 @@ app.use(express.json());
 const { sequelize } = require('./models/index.js');
 require('dotenv').config();
 
-const { createNewUser } = require('./controller/dataController.js');
+const { createNewUser, savePhoto } = require('./controller/dataController.js');
 const { searchImages } = require('./controller/serviceController.js');
 
+app.get('/api/photos/search', searchImages);
 
 app.post('/api/users',  createNewUser);
-app.get('/api/photos/search', searchImages);
+app.post('/api/photos', savePhoto);
 
 app.get('/', (req, res) => {
     res.status(200).send('Bytr Picstoria - Unspalash: Excercise 2.4 MS1 Assignment (Working with Microservices)');

@@ -7,11 +7,7 @@ const {
     tag: tagModel,
 } = require('../models');
 
-// Service Function - Checking if an email already exist in the database.
-async function doesUserExist (email) {
-    const response = await userModel.findOne({where: {email: email}});
-    return response === null;
-}
+let latestSearchImages = [];
 
 const searchImages = async (req, res) => {
     try {
@@ -26,10 +22,19 @@ const searchImages = async (req, res) => {
         }
 
         const response = await axiosInstance.get(`/search/photos`, {
-            params: { query, client_id: accessKey },
+            params: { query, 
+                client_id: accessKey,
+             },
         });
 
         const results = response.data;
+        latestSearchImages = results.results.map((image) =>  {
+            return {
+                imageUrl: image.urls.raw,
+                description: image.description || null,
+                altDescription:  image.alt_description || null,
+            }
+        })
         return res.status(200).json(results);
     } catch (error) {
         console.error(error);
@@ -37,4 +42,4 @@ const searchImages = async (req, res) => {
     }
 };
 
-module.exports = { doesUserExist, searchImages };
+module.exports = { searchImages, latestSearchImages };
