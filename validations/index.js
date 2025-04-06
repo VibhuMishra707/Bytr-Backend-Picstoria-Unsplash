@@ -133,4 +133,13 @@ async function validateSearchPhotosByTagQuery (search, userId, sort) {
     return null;
 }
 
-module.exports = { validateNewUser, doesUserExist, validateNewSavePhoto, validateNewTag, validateSearchPhotosByTagQuery }
+async function validateUserId (userId) {
+    if (!userId || userId <= 0 || !Number.isInteger(userId)) {
+        return "User ID is required to view search history";
+    } else if (await userModel.findByPk(userId) === null) {
+        return "User does not exist";
+    }
+    return null;
+}
+
+module.exports = { validateNewUser, doesUserExist, validateNewSavePhoto, validateNewTag, validateSearchPhotosByTagQuery, validateUserId }

@@ -7,6 +7,8 @@ const {
     tag: tagModel,
 } = require('../models');
 
+const { validateUserId } = require('../validations/index.js');
+
 let latestSearchImages = [];
 
 const searchImages = async (req, res) => {
@@ -42,4 +44,25 @@ const searchImages = async (req, res) => {
     }
 };
 
-module.exports = { searchImages, latestSearchImages };
+const viewSearchHistory = async (req, res) => {
+    try {
+        const userId = parseInt(req.query.userId);
+        const validationError = await validateUserId(userId);
+        if (validationError) {
+            return res.status(400).json({error: validationError});
+        } else {
+            const searchHistory = await searchHistoryModel.findAll({
+                attributes: ['query', 'timestamp'],
+                where: { userId: userId },
+                order: [['timestamp', 'DESC']],
+                limit: 25,
+            })
+            return res.status(200).json({message: "Search history retrived successfully", searchHistory: searchHistory});
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({error: error.message || "Failed to retrieve search history."})
+    }
+}
+
+module.exports = { searchImages, viewSearchHistory, latestSearchImages };

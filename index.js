@@ -9,10 +9,11 @@ const { sequelize } = require('./models/index.js');
 require('dotenv').config();
 
 const { createNewUser, savePhoto, addPhotoTag, searchPhotosByTag } = require('./controller/dataController.js');
-const { searchImages } = require('./controller/serviceController.js');
+const { searchImages, viewSearchHistory } = require('./controller/serviceController.js');
 
 app.get('/api/photos/search', searchImages);
 app.get('/api/photos/tag/search', searchPhotosByTag);
+app.get('/api/search-history', viewSearchHistory);
 
 app.post('/api/users',  createNewUser);
 app.post('/api/photos', savePhoto);

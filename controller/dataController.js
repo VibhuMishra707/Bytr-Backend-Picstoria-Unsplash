@@ -132,6 +132,10 @@ const searchPhotosByTag = async (req, res) => {
                 const taggedPhotosWithSearch = await photoModel.findAll({
                     where: {
                         id: taggedPhotosId.map(tag => tag.photoId),
+                        /*  ---- GitHub CoPilot ----
+                            The reason 'tag.photoId' is directly accessible in 'taggedPhotosId' is that Sequelize automatically maps the `dataValues` properties to the model instance. This means you can access the properties of the `dataValues` object directly on the model instance without explicitly referencing `dataValues`.
+                        */
+
                     },
                     order: [['dateSaved', sort]],
                 })
@@ -173,7 +177,7 @@ const searchPhotosByTag = async (req, res) => {
                     }
                     ]
                 */
-               
+
                 return res.status(200).json({message: "Search query successfully fetched photos", photos: taggedPhotosWithSearch});
                 /* ---- Output On Screen ----
                     {
