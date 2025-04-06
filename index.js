@@ -8,10 +8,11 @@ app.use(express.json());
 const { sequelize } = require('./models/index.js');
 require('dotenv').config();
 
-const { createNewUser, savePhoto, addPhotoTag } = require('./controller/dataController.js');
+const { createNewUser, savePhoto, addPhotoTag, searchPhotosByTag } = require('./controller/dataController.js');
 const { searchImages } = require('./controller/serviceController.js');
 
 app.get('/api/photos/search', searchImages);
+app.get('/api/photos/tag/search', searchPhotosByTag);
 
 app.post('/api/users',  createNewUser);
 app.post('/api/photos', savePhoto);

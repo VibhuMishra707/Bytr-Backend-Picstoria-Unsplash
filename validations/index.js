@@ -116,4 +116,21 @@ async function validateNewTag (tags, photoId) {
     return null;
 }
 
-module.exports = { validateNewUser, doesUserExist, validateNewSavePhoto, validateNewTag }
+async function validateSearchPhotosByTagQuery (search, userId, sort) {
+    console.log(search, userId, sort);  // Helped in debugging // Output: undefined NaN ASC
+    if (!search || search.trim() === '' || !userId || userId <= 0 || !Number.isInteger(userId)) {
+        return "Search query and User ID are required to search photos";
+    }
+    if (sort !== 'ASC' && sort !== 'DESC') {
+        return "Sort order should be either 'ASC' or 'DESC'";
+    }
+    if (await userModel.findByPk(userId) === null) {
+        return "User does not exist";
+    }
+    if (await tagModel.findOne({ where: {name: search}}) === null) {
+        return "Tag does not exist";
+    }
+    return null;
+}
+
+module.exports = { validateNewUser, doesUserExist, validateNewSavePhoto, validateNewTag, validateSearchPhotosByTagQuery }
