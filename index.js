@@ -23,11 +23,12 @@ app.get('/', (req, res) => {
     res.status(200).send('Bytr Picstoria - Unspalash: Excercise 2.4 MS1 Assignment (Working with Microservices)');
 });
 
-
-sequelize.authenticate().then(() => {
-    console.log("Database Connected.");
-}).catch(error => {
-    console.error("Unable to connect to database", error);
-});
+if (process.env.NODE_ENV !== 'test') {
+    sequelize.authenticate().then(() => {
+        console.log("Database Connected.");
+    }).catch(error => {
+        console.error("Unable to connect to database", error);
+    });
+}
 
 module.exports = { app };
